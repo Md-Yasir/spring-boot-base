@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property name="LOGS" value="/opt/springboot-base-log"/>
+    <property name="LOG_FILE_NAME" value="springboot-base"/>
+
+    <!-- Define the JSON encoder for log events -->
+    <appender name="JSON" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <!-- Customize the Logstash pattern as needed -->
+            <fieldNames>
+                <timestamp>time</timestamp>
+                <version>version</version>
+                <message>msg</message>
+                <logger>name</logger>
+                <thread>[ignore]</thread>
+                <levelValue>[ignore]</levelValue>
+            </fieldNames>
+        </encoder>
+    </appender>
+
+    <!-- Define a RollingFileAppender with time-based and size-based policies -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/${LOG_FILE_NAME}.json</file>
+
+        <!-- Encoder for the log file, in JSON format -->
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <!-- Customize the Logstash pattern as needed -->
+            <pattern>
+                <fieldNames>
+                    <timestamp>time</timestamp>
+                    <version>version</version>
+                    <message>msg</message>
+                    <logger>name</logger>
+                    <thread>[ignore]</thread>
+                    <levelValue>[ignore]</levelValue>
+                </fieldNames>
+            </pattern>
+        </encoder>
+
+        <!-- Define the rolling policy based on time and size -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS}/${LOG_FILE_NAME}-%d{yyyy-MM-dd}.json</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize> <!-- Adjust the maximum file size as needed -->
+            <maxHistory>7</maxHistory> <!-- Keep up to 7 days of logs -->
+            <totalSizeCap>1GB</totalSizeCap> <!-- Total size cap for all log files -->
+        </rollingPolicy>
+    </appender>
+
+    <logger name="com.yass.springboot" level="info">
+        <appender-ref ref="JSON"/>
+    </logger>
+    <!-- Specify the root logger to use both the JSON console and file appenders -->
+    <root level="info">
+        <appender-ref ref="JSON"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+</configuration>
