@@ -40,8 +40,8 @@ public class User implements UserDetails {
   @Enumerated(EnumType.STRING)
   private List<Role> roles;
 
-  @OneToMany(mappedBy = "user")
-  private List<Token> tokens;
+//  @OneToMany(mappedBy = "user")
+//  private List<Token> tokens;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
