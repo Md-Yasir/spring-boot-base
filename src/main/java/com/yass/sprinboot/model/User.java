@@ -16,15 +16,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "user")
 public class User implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+  @Column(name = "user_id")
+  private Integer userId;
   private String firstname;
   @Nullable
   private String middleName;
@@ -37,11 +36,7 @@ public class User implements UserDetails {
   private LocalDateTime lastLoginAt;
   private boolean isActive;
 
-  @Enumerated(EnumType.STRING)
   private List<Role> roles;
-
-//  @OneToMany(mappedBy = "user")
-//  private List<Token> tokens;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -49,11 +44,6 @@ public class User implements UserDetails {
             .flatMap(role -> role.getAuthorities().stream())
             .collect(Collectors.toList());
   }
-
-//  @Override
-//  public String getPassword() {
-//    return password;
-//  }
 
   @Override
   public String getUsername() {

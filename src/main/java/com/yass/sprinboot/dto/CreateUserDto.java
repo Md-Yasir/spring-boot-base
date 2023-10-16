@@ -10,13 +10,10 @@ import java.util.List;
 
 @Data
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class CreateUserDto {
 
   private String firstname;
   private String lastname;
   private String email;
   private String password;
-  private List<Role> roles;
 }

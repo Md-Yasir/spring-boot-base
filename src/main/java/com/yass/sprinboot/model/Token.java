@@ -1,4 +1,3 @@
-/*
 package com.yass.sprinboot.model;
 
 import jakarta.persistence.*;
@@ -9,19 +8,14 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
+@Table(name = "role")
 public class Token {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "role_id")
   public Integer id;
-
-  @Column(unique = true)
-  public String token;
-
-  public boolean revoked;
 
   public boolean expired;
 
@@ -29,4 +23,3 @@ public class Token {
   @JoinColumn(name = "user_id")
   public User user;
 }
-*/

@@ -1,12 +1,15 @@
 package com.yass.sprinboot.config;
 
 //import com.yass.sprinboot.repository.TokenRepository;
+
 import com.yass.sprinboot.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,7 +26,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
-//    private final TokenRepository tokenRepository;
 
     @Override
     protected void doFilterInternal(
@@ -46,11 +48,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         userEmail = jwtService.extractUsername(jwt);
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-//            var isTokenValid = tokenRepository.findByToken(jwt)
-//                    .map(t -> !t.isExpired() && !t.isRevoked())
-//                    .orElse(false);
-//            if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
-                if (jwtService.isTokenValid(jwt, userDetails)) {
+            if (jwtService.isTokenValid(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
