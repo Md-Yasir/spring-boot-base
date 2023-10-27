@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <property name="LOGS" value="/opt/springboot-base-log"/>
-    <property name="LOG_FILE_NAME" value="springboot-base"/>
+    <property name="LOGS" value="/opt/sync-app-log"/>
+    <property name="LOG_FILE_NAME" value="sync-app-api"/>
 
     <!-- Define the JSON encoder for log events -->
-    <appender name="JSON" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- <appender name="JSON" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-            <!-- Customize the Logstash pattern as needed -->
+            Customize the Logstash pattern as needed
             <fieldNames>
                 <timestamp>time</timestamp>
                 <version>version</version>
@@ -16,6 +16,13 @@
                 <thread>[ignore]</thread>
                 <levelValue>[ignore]</levelValue>
             </fieldNames>
+        </encoder>
+    </appender> -->
+    
+      <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <withJansi>true</withJansi>
+        <encoder>
+            <pattern>[%thread] %highlight(%-5level) %cyan(%logger{15}) - %msg %n</pattern>
         </encoder>
     </appender>
 
@@ -47,12 +54,12 @@
         </rollingPolicy>
     </appender>
 
-    <logger name="com.yass.springboot" level="info">
-        <appender-ref ref="JSON"/>
+    <logger name="com.yass.springboot" level="debug">
+        <appender-ref ref="STDOUT"/>
     </logger>
     <!-- Specify the root logger to use both the JSON console and file appenders -->
-    <root level="info">
-        <appender-ref ref="JSON"/>
+    <root level="debug">
+        <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
     </root>
 
