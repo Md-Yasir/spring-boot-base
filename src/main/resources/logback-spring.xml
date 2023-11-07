@@ -54,11 +54,11 @@
         </rollingPolicy>
     </appender>
 
-    <logger name="com.yass.springboot" level="debug">
+    <logger name="com.yass.springboot" level="info">
         <appender-ref ref="STDOUT"/>
     </logger>
     <!-- Specify the root logger to use both the JSON console and file appenders -->
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
     </root>
